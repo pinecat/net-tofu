@@ -1,0 +1,34 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
+Metrics/MethodLength:
+  Enabled: true
+  Max: 18
+  Exclude:
+    - "lib/net/tofu/response.rb"
+
+Style/ClassVars:
+  Enabled: true
+  Exclude:
+    - "lib/net/tofu/request.rb"
+
+Style/Semicolon:
+  Enabled: true
+  Exclude:
+    - "lib/net/tofu/response.rb"
+
+Style/SingleLineMethods:
+  Enabled: true
+  Exclude:
+    - "lib/net/tofu/response.rb"
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
