@@ -1,6 +1,9 @@
 AllCops:
   TargetRubyVersion: 2.6
 
+Layout/HeredocIndentation:
+  Enabled: false
+
 Metrics/AbcSize:
   Enabled: true
   Max: 25
@@ -8,6 +11,9 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Enabled: true
   Max: 18
+
+Style/Next:
+  Enabled: false
 
 Style/Semicolon:
   Enabled: true
@@ -27,3 +33,5 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - "test/test_net_tofu_pub.rb"

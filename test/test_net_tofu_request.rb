@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestNetTofuRequest < Minitest::Test
   def test_that_it_parses_a_uri_with_all_components
-    r = Net::Tofu::Request.new(URIS[1])
+    r = Net::Tofu::Request.new(URIS[1], trust: true)
 
     assert r.scheme == URI::Gemini::DEFAULT_SCHEME
     assert r.host == HOST
@@ -15,7 +15,7 @@ class TestNetTofuRequest < Minitest::Test
   end
 
   def test_that_it_parses_a_uri_without_a_path
-    r = Net::Tofu::Request.new(URIS[2])
+    r = Net::Tofu::Request.new(URIS[2], trust: true)
 
     assert r.scheme == URI::Gemini::DEFAULT_SCHEME
     assert r.host == HOST
@@ -26,7 +26,7 @@ class TestNetTofuRequest < Minitest::Test
   end
 
   def test_that_it_parses_a_uri_without_a_scheme
-    r = Net::Tofu::Request.new(URIS[3])
+    r = Net::Tofu::Request.new(URIS[3], trust: true)
 
     assert r.scheme == URI::Gemini::DEFAULT_SCHEME
     assert r.host == HOST
@@ -37,7 +37,7 @@ class TestNetTofuRequest < Minitest::Test
   end
 
   def test_that_it_parses_a_uri_without_a_path_or_a_scheme
-    r = Net::Tofu::Request.new(URIS[4])
+    r = Net::Tofu::Request.new(URIS[4], trust: true)
 
     assert r.scheme == URI::Gemini::DEFAULT_SCHEME
     assert r.host == HOST

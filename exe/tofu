@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+
+require "optparse"
+require "net/tofu"
+
+OptionParser.new do |p|
+  p.banner = "Usage: tofu [options]"
+
+  p.on("-rHOST", "--remove=HOST", "Host to remove from the ~/.tofu/known_hosts file") do |host|
+    Net::Tofu::Pub.db_exist?
+
+    lines = File.read(Net::Tofu::Pub::DB).split("\n")
+
+    idx = nil
+    lines.each_with_index do |l, i|
+      h = l.split[0]
+      if host == h
+        idx = i
+        break
+      end
+    end
+
+    lines.delete_at(idx) unless idx.nil?
+
+    f = File.open(Net::Tofu::Pub::DB, "w")
+    f.write lines.join("\n")
+    f.write "\n" unless lines.nil? || lines.empty?
+
+    exit 0
+  ensure
+    f&.close
+  end
+
+  p.on("-V", "--version", "Print the version then quit") do
+    puts "tofu v#{Net::Tofu::VERSION}"
+    exit 0
+  end
+end.parse!

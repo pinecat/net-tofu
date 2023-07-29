@@ -8,13 +8,13 @@ class TestNetTofu < Minitest::Test
   end
 
   def test_that_it_can_get_a_geminispace_page
-    body = Net::Tofu.get(URIS[0])
+    body = Net::Tofu.get(URIS[0], trust: true)
 
     refute_nil body
   end
 
   def test_that_it_gets_a_proper_response
-    resp = Net::Tofu.get_response(URIS[0])
+    resp = Net::Tofu.get_response(URIS[0], trust: true)
 
     assert resp.success?
     assert resp.status == 20

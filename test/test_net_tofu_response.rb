@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestNetTofuResponse < Minitest::Test
   def test_receiving_a_success_response
-    r = Net::Tofu.get_response(URIS[0])
+    r = Net::Tofu.get_response(URIS[0], trust: true)
 
     assert r.success?
     assert r.status == 20
@@ -14,7 +14,7 @@ class TestNetTofuResponse < Minitest::Test
   end
 
   def test_receiving_a_redirect_response
-    r = Net::Tofu.get_response("#{URIS[0]}software")
+    r = Net::Tofu.get_response("#{URIS[0]}software", trust: true)
 
     assert r.redirect?
     assert r.status == 31
@@ -24,7 +24,7 @@ class TestNetTofuResponse < Minitest::Test
   end
 
   def test_receiving_a_permanent_failure_response
-    r = Net::Tofu.get_response("#{URIS[0]}prettysurethisdoesntexist")
+    r = Net::Tofu.get_response("#{URIS[0]}prettysurethisdoesntexist", trust: true)
 
     assert r.permanent_failure?
     assert r.status == 51

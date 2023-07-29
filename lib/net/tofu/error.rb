@@ -26,5 +26,14 @@ module Net
       # Raised when a request contains an invalid URI.
       class InvalidURIError < StandardError; end
     end
+
+    # Raised if the host in a get request doesn't have a cached public key.
+    class UnknownHostError < StandardError; end
+
+    # Raised if the host returns an invalid certificate (usually, it means it is out of date).
+    class InvalidCertificateError < StandardError; end
+
+    # Raised if the host returns a different public key.
+    class PublicKeyMismatchError < StandardError; end
   end
 end

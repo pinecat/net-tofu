@@ -33,7 +33,7 @@ module Net
       # Constructor for the request type.
       # @param host [String] A host string, optionally with the gemini:// scheme.
       # @param port [Integer] Optional parameter to specify the server port to connect to.
-      def initialize(host, port: nil)
+      def initialize(host, port: nil, trust: false)
         @uri = URI(host)
         @uri.port = port unless port.nil?
 
@@ -47,7 +47,7 @@ module Net
         end
 
         # Create a socket
-        @sock = Socket.new(@host, @port)
+        @sock = Socket.new(@host, @port, trust)
       end
 
       # Format the URI for sending over a socket to a Gemini server.

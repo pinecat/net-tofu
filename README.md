@@ -14,7 +14,7 @@ gem install opentofu
 Or to use it as part of a project, place the following line in your Gemfile, then run `bundle install` in your project directory:
 
 ```ruby
-gem "opentofu", "~> 0.1.0"
+gem "opentofu", "~> 0.2.0"
 ```
 
 ## Usage

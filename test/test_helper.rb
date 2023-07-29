@@ -7,7 +7,9 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "net/tofu"
 require "minitest/autorun"
 
-# Previous content of test helper now starts here
+# Use a different database directory, so you don't overwrite the normal place for testing.
+Net::Tofu::Pub::DIR = File.expand_path("./test/tofu")
+Net::Tofu::Pub::DB = File.expand_path("./test/tofu/known_hosts")
 
 HOST = "gemini.circumlunar.space"
 PATH = "/"

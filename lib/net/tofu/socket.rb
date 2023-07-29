@@ -7,9 +7,10 @@ module Net
       # Constructor for the socket type.
       # @param host [String] Hostname of the server to connect to.
       # @param port [Integer] Server port to connect to (typically 1965).
-      def initialize(host, port)
+      def initialize(host, port, trust)
         @host = host
         @port = port
+        @trust = trust
         @sock = OpenSSL::SSL::SSLSocket.open(@host, @port, context: generate_secure_context)
       end
 
@@ -17,6 +18,7 @@ module Net
       def connect
         @sock.hostname = @host
         @sock.connect
+        validate_certs
       end
 
       # Try and retrieve data from a request.
@@ -48,6 +50,37 @@ module Net
         ctx.min_version = OpenSSL::SSL::TLS1_2_VERSION
         ctx.options |= OpenSSL::SSL::OP_IGNORE_UNEXPECTED_EOF
         ctx
+      end
+
+      # Validate a remote certificate with a local one
+      def validate_certs
+        remote = Pub.new(@host, @sock.peer_cert.to_pem)
+        local = Pub.lookup(@host)
+
+        raise UnknownHostError if local.nil? && !@trust
+
+        remote.pin if local.nil? && @trust
+        local = Pub.lookup(@host)
+
+        unless local == remote
+          raise PublicKeyMismatchError, <<-TXT
+The remote host has a different certificate than what is cached locally.
+This could be because a new certificate was issued, or because of a MITM attack.
+Please verify the new public certificate, then you may run:
+
+  tofu -r #{@host}
+
+Once you remove the old certificate public key, you will be able to add the new one.
+          TXT
+        end
+
+        validate_timestamp(remote)
+      end
+
+      # Validate certificate timestamps
+      def validate_timestamp(remote)
+        raise InvalidCertificateError, "Certificate is not valid yet" if remote.x509.not_before > Time.now.utc
+        raise InvalidCertificateError, "Certificate is no longer valid" if remote.x509.not_after < Time.now.utc
       end
     end
   end
