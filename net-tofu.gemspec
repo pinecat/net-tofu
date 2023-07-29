@@ -3,25 +3,25 @@
 require_relative "lib/net/tofu/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "opentofu"
+  spec.name = "net-tofu"
   spec.version = Net::Tofu::VERSION
   spec.authors = ["Rory Dudley"]
   spec.email = ["rory.dudley@gmail.com"]
 
   spec.summary = "A Gemini client and certificate manager."
   spec.description = <<-TXT
-    OpenTOFU is a client and certificate pinning library for Geminispace, derived from
+    Net::Tofu is a client and certificate pinning library for Geminispace, derived from
     the 'trust on first use' authentication scheme (https://en.wikipedia.org/wiki/Trust_on_first_use).
   TXT
-  spec.homepage = "https://github.com/pinecat/opentofu"
+  spec.homepage = "https://github.com/pinecat/net-tofu"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/pinecat/opentofu"
-  spec.metadata["changelog_uri"] = "https://github.com/pinecat/opentofu/blob/master/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/pinecat/net-tofu"
+  spec.metadata["changelog_uri"] = "https://github.com/pinecat/net-tofu/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

@@ -7,7 +7,7 @@ GIT
 PATH
   remote: .
   specs:
-    opentofu (0.2.0)
+    net-tofu (0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -56,7 +56,7 @@ PLATFORMS
 DEPENDENCIES
   gemtext (~> 1.0)!
   minitest (~> 5.0)
-  opentofu!
+  net-tofu!
   rake (~> 13.0)
   rubocop (~> 1.21)
   simplecov

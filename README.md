@@ -1,6 +1,6 @@
-# OpenTOFU
+# Net::Tofu
 
-OpenTOFU is a certificate pinning and client library for Geminispace.
+Net::Tofu is a certificate pinning and client library for Geminispace.
 It is based off of the ['trust on first use'](https://en.wikipedia.org/wiki/Trust_on_first_use) authentication scheme.
 
 ## Installation
@@ -8,13 +8,13 @@ It is based off of the ['trust on first use'](https://en.wikipedia.org/wiki/Trus
 To install the gem standalone:
 
 ```sh
-gem install opentofu
+gem install net-tofu
 ```
 
 Or to use it as part of a project, place the following line in your Gemfile, then run `bundle install` in your project directory:
 
 ```ruby
-gem "opentofu", "~> 0.2.0"
+gem "net-tofu", "~> 0.2.0"
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/pinecat/opentofu.
+Bug reports and pull requests are welcome on GitHub at https://github.com/pinecat/net-tofu.
 
 ## License
 

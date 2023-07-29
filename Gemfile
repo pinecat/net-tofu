@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in opentofu.gemspec
+# Specify your gem's dependencies in net-tofu.gemspec
 gemspec
 
 gem "rake", "~> 13.0"
