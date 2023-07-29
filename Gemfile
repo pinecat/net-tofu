@@ -14,6 +14,6 @@ gem "rubocop", "~> 1.21"
 gem "yard", "~> 0.9"
 
 group :development do
-  gem "gemtext", "~> 1.0"
+  gem "gemtext", "~> 1.0", git: "https://github.com/pinecat/gemtext"
   gem "simplecov", require: false
 end
