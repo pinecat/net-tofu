@@ -13,4 +13,7 @@ gem "rubocop", "~> 1.21"
 
 gem "yard", "~> 0.9"
 
-gem "gemtext", "~> 1.0", group: :development
+group :development do
+  gem "gemtext", "~> 1.0"
+  gem "simplecov", require: false
+end

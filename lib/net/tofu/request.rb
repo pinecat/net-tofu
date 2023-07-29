@@ -4,8 +4,6 @@ module Net
   module Tofu
     # Stores a client request to a Gemini server.
     class Request
-      SCHEME = "gemini"
-
       MAX_URI_BYTESIZE = 1024
 
       # @return [URI] The full URI object of the request.
@@ -36,16 +34,11 @@ module Net
       # @param host [String] A host string, optionally with the gemini:// scheme.
       # @param port [Integer] Optional parameter to specify the server port to connect to.
       def initialize(host, port: nil)
-        # Keeps track of the current host for links with only paths.
-        @@current_host ||= ""
+        @uri = URI(host)
+        @uri.port = port unless port.nil?
 
-        @host = host
-        @port = port unless port.nil?
-        determine_host
         parse_head
         parse_tail
-
-        puts format
 
         # Make sure the URI isn't too large
         if format.bytesize > MAX_URI_BYTESIZE
@@ -73,63 +66,28 @@ module Net
 
       private
 
-      # Parses the host and the path, and sets the current_host.
-      def determine_host
-        puts "current: #{@@current_host}"
-        @uri = URI(@host)
-
-        unless @uri.host.nil? || @uri.host.empty?
-          @host = @uri.host
-          @@current_host = @host
-          return
-        end
-
-        return if @uri.path.nil? || @uri.path.empty?
-        return unless @uri.host.nil? || @uri.host.empty?
-
-        if @uri.path.start_with?("/")
-          raise InvalidURIError, "No host specified" if @@current_host.nil? || @@current_host.empty?
-
-          unless @@current_host.nil? || @@current_host.empty?
-            @uri.host = @@current_host
-            @host = @uri.host
-            @@current_host = @host
-          end
-
-          return
-        end
-
-        paths = @uri.path.split("/")
-        puts paths
-
-        @uri.host = paths[0]
-        @host = @uri.host
-        @@current_host = @host
-        @uri.path = nil if paths.length == 1
-        return unless paths.length > 1
-
-        @uri.path = paths[1..].join("/")
-        @uri.path = "/#{uri.path}"
-      end
-
       # Parses the scheme, the host, and the port for the request.
       def parse_head
         # Check if a scheme was specified, if not, default to gemini://
         # Also set the port if this happens
         if @uri.scheme.nil? || @uri.scheme.empty?
-          @uri.scheme = SCHEME
-          @uri.port = URI::Gemini::DEFAULT_PORT
+          @uri.scheme = URI::Gemini::DEFAULT_SCHEME
+          @uri.port = URI::Gemini::DEFAULT_PORT if @uri.port.nil?
         end
+
+        # Check if a host was specified.
+        raise InvalidURIError, "Request does not contain a host" if @uri.host.nil? || @uri.host.empty?
 
         # Set member parts
         @scheme = @uri.scheme
+        @host = @uri.host
         @port = @uri.port
 
         # Check if a scheme is present that isn't gemini://
-        return if @uri.scheme == SCHEME
+        return if @uri.scheme == URI::Gemini::DEFAULT_SCHEME
 
         raise InvalidSchemeError,
-              "Request uses an invalid scheme (has: #{@uri.scheme}, wants: #{SCHEME}"
+              "Request uses an invalid scheme (has: #{@uri.scheme}, wants: #{URI::Gemini::DEFAULT_SCHEME}"
       end
 
       # Parses the path, the query, and the fragment for the request.

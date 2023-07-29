@@ -1,16 +1,13 @@
 AllCops:
   TargetRubyVersion: 2.6
 
+Metrics/AbcSize:
+  Enabled: true
+  Max: 25
+
 Metrics/MethodLength:
   Enabled: true
   Max: 18
-  Exclude:
-    - "lib/net/tofu/response.rb"
-
-Style/ClassVars:
-  Enabled: true
-  Exclude:
-    - "lib/net/tofu/request.rb"
 
 Style/Semicolon:
   Enabled: true
@@ -18,9 +15,7 @@ Style/Semicolon:
     - "lib/net/tofu/response.rb"
 
 Style/SingleLineMethods:
-  Enabled: true
-  Exclude:
-    - "lib/net/tofu/response.rb"
+  Enabled: false
 
 Style/StringLiterals:
   Enabled: true

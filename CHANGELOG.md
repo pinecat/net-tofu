@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - 2023-07027
+## [0.1.1] - 2023-07-28
+
+### Added
+
+- Tests.
+- The `simplecov` gem to view testing coverage.
+- A new error, for if the server doesn't send any data.
+- The Linux platform to the bundle platform.
+
+### Fixed
+
+- Complexity issues in the Response class from the linter.
+
+### Removed
+
+- The `@@current_host` class variable from Request. Clients should handle keeping track of the current host, Tofu should just fetch data.
+- The complicated logic used to parse host names from the Request class, as per the above point.
+
+## [0.1.0] - 2023-07-27
 
 First release. Still lots of improvements to be made.
 

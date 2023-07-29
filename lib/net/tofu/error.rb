@@ -3,6 +3,9 @@
 module Net
   module Tofu
     class Response
+      # Raised when a server doesn't send any data.
+      class NoServerResponseError < StandardError; end
+
       # Raised when a server sends an invalid header.
       class InvalidHeaderError < StandardError; end
 

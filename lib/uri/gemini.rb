@@ -35,6 +35,9 @@ module URI # :nodoc:
     # A Default port of 1965 for URI::Gemini.
     DEFAULT_PORT = 1965
 
+    # A Default scheme of gemini for URI::Gemini.
+    DEFAULT_SCHEME = "gemini"
+
     # An Array of the available components for URI::Gemini.
     COMPONENT = %i[scheme host port
                    path query fragment].freeze

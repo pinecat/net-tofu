@@ -83,6 +83,8 @@ module Net
 
       # Splits up the responseinto a header and a body.
       def parse
+        raise NoServerResponseError if @data.nil? || @data.empty?
+
         # Extract the header and parse it
         a = @data.split("\n")
         @header = a[0].strip
@@ -108,6 +110,7 @@ module Net
         # Parse the meta
         @meta = ""
         @meta = a[1..].join(" ") if a.length >= 2
+        @meta.strip!
         parse_meta
       end
 
@@ -144,14 +147,21 @@ module Net
       def parse_meta
         # Make sure the meta isn't too large
         if @meta.bytesize > MAX_META_BYTESIZE
-          raise InvalidMetaError,
-                "The server sent a meta that was too large, should be #{MAX_META_BYTESIZE} bytes, instead is #{@meta.bytesize} bytes"
+          raise InvalidMetaError, <<-TXT
+                The server sent a meta that was too large, should be #{MAX_META_BYTESIZE} bytes,
+                instead is #{@meta.bytesize} bytes
+          TXT
         end
 
         if @status_maj == TEMPORARY_FAILURE || @status_maj == PERMANENT_FAILURE || @status_maj == REQUEST_CERTIFICATE
           return
         end
 
+        # Handle extra checks based on the @status type
+        handle_type
+      end
+
+      def handle_type
         # Make sure meta exists (i.e. has length)
         # This satisfies the INPUT and SUCCESS
         unless @meta.length.positive?
@@ -169,10 +179,10 @@ module Net
         raise InvalidRedirectError, "The redirect link does not have a scheme" if uri.scheme.nil? || uri.scheme.empty?
 
         # Make sure the URI scheme is 'gemini'
-        return if uri.scheme == "gemini"
+        return if uri.scheme == URI::Gemini::DEFAULT_SCHEME
 
         raise InvalidRedirectError,
-              "The redirect link has an invalid scheme (has: #{uri.scheme}, wants: gemini)"
+              "The redirect link has an invalid scheme (has: #{uri.scheme}, wants: #{URI::Gemini::DEFAULT_SCHEME})"
       end
     end
   end

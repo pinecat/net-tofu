@@ -4,7 +4,7 @@ require_relative "lib/net/tofu/version"
 
 Gem::Specification.new do |spec|
   spec.name = "opentofu"
-  spec.version = Tofu::VERSION
+  spec.version = Net::Tofu::VERSION
   spec.authors = ["Rory Dudley"]
   spec.email = ["rory.dudley@gmail.com"]
 
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/pinecat/opentofu"
-  spec.metadata["changelog_uri"] = "https://github.com/pinecat/opentofu"
+  spec.metadata["changelog_uri"] = "https://github.com/pinecat/opentofu/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
